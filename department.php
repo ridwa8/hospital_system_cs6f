@@ -27,25 +27,14 @@ include "library/conn.php"
       <div class="col-2"></div>
       <div class="col-md-8">
           <div class="tile">
-            <h3 class="tile-title">User Registration Form</h3>
+            <h3 class="tile-title">Department Registration Form</h3>
             <div class="tile-body">
               <form action="" method="POST">
                 <div class="mb-3">
-                  <label class="form-label">Username</label>
-                  <input class="form-control" type="text" name="username" placeholder="Username" required>
+                  <label class="form-label">Department Name</label>
+                  <input class="form-control" type="text" name="deptname" placeholder="Department Name" required>
                 </div>
-                <div class="mb-3">
-                  <label class="form-label">Password</label>
-                  <input class="form-control" type="password" name="password" placeholder="Password" required>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">User Type</label>
-                 <select name="usertype" class="form-control" required>
-                  <option value="">Select User Type</option>
-                  <option value="Admin">Admin</option>
-                  <option value="User">User</option>
-                 </select>
-                </div>
+             
                 <div class="mb-3">
                   <label class="form-label">Date</label>
                   <input class="form-control" type="date" name="date" value="<?php echo Date("Y-m-d")?>">
@@ -62,12 +51,10 @@ include "library/conn.php"
             <!-- save code -->
             <?php
             if(isset($_POST['btnregister'])){
-              $un = mysqli_real_escape_string($conn, $_POST['username']);
-              $pa = mysqli_real_escape_string($conn, $_POST['password']);
-              $ut = mysqli_real_escape_string($conn, $_POST['usertype']);
+              $dn = mysqli_real_escape_string($conn, $_POST['deptname']);      
               $da = mysqli_real_escape_string($conn, $_POST['date']);
 
-              $insert = mysqli_query($conn,"INSERT INTO users VALUES(null, '$un', '$pa', '$ut', '$da')");
+              $insert = mysqli_query($conn,"INSERT INTO department VALUES(null, '$dn','$da')");
               echo "<h1 class='btn btn-success'>Insert Success</h1>";
             }
             ?>

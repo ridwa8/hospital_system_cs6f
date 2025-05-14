@@ -38,8 +38,25 @@ include "library/conn.php"
                       <th>Date</th>
                       <th>Action</th>
                     </tr>
-
+</thead>
                 <tbody>
+
+                <!-- Update code -->
+                <?php
+                    if(isset($_POST['btnupdate'])){
+                    $id = mysqli_real_escape_string($conn, $_POST['id']);
+                    $un = mysqli_real_escape_string($conn, $_POST['username']);
+                    $pa = mysqli_real_escape_string($conn, $_POST['password']);
+                    $ut = mysqli_real_escape_string($conn, $_POST['usertype']);
+                   $da = mysqli_real_escape_string($conn, $_POST['date']);
+
+                  $edit = mysqli_query($conn,"update users set username='$un', password='$pa', usertype='$ut', regdate='$da' where 
+                  userid='$id'");
+                echo "<h1 class='btn btn-success'>updated Success</h1>";
+                }
+            ?>
+
+                <!-- Delete code -->
                     <?php
                     if(isset($_GET['idd'])){
                         $id = $_GET['idd'];
@@ -47,6 +64,7 @@ include "library/conn.php"
                         echo "<h1 class='btn btn-danger'>Delete Success<h1/>";
                     }
                     ?>
+                    <!-- List USers -->
                  <?php
                  $sql = mysqli_query($conn, "SELECT * FROM users");
                  while($row = mysqli_fetch_array($sql)){?>
@@ -57,7 +75,8 @@ include "library/conn.php"
                     <td><?php echo $row[3];?></td>
                     <td><?php echo $row[4];?></td>
                     <td>
-                        <a href="" class="fa fa-edit btn btn-success">Edit</a>
+                      <!-- melaha laga tago actionska -->
+                        <a href="edit_user.php?idd=<?php echo $row[0];?>" class="fa fa-edit btn btn-success">Edit</a>
                         <a href="users_list.php?idd=<?php echo $row[0];?>" class="fa fa-edit btn btn-danger"
                          onclick= "return confirm('Mahubtaa Inaad Tiraysid Xogta')">Del</a>
                         <a href="users_report.php?idd=<?php echo $row[0];?>" class="fa fa-edit btn btn-info" target="_blank">Print</a>

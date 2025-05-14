@@ -27,47 +27,59 @@ include "library/conn.php"
       <div class="col-2"></div>
       <div class="col-md-8">
           <div class="tile">
-            <h3 class="tile-title">User Registration Form</h3>
+            <h3 class="tile-title">Payment Registration Form</h3>
             <div class="tile-body">
               <form action="" method="POST">
+        
                 <div class="mb-3">
-                  <label class="form-label">Username</label>
-                  <input class="form-control" type="text" name="username" placeholder="Username" required>
+                  <label class="form-label">Patient Name</label>
+                  <select class="form-control" name="ddlpatientname">
+                    <option value="">Select Patient Name</option>
+                    <?php
+                    $sql = mysqli_query($conn,"SELECT patient_id, patient_name FROM patients");
+                    while($row = mysqli_fetch_array($sql)){
+                      echo "<option value='$row[0]'>$row[1]</option>";
+                    }
+                    ?>
+                  </select>
+
                 </div>
                 <div class="mb-3">
-                  <label class="form-label">Password</label>
-                  <input class="form-control" type="password" name="password" placeholder="Password" required>
+                  <label class="form-label">Current Blance</label>
+                  <input class="form-control" type="number" name="currentbalance" placeholder="Current Blance" required>
                 </div>
-                <div class="mb-3">
-                  <label class="form-label">User Type</label>
-                 <select name="usertype" class="form-control" required>
-                  <option value="">Select User Type</option>
-                  <option value="Admin">Admin</option>
-                  <option value="User">User</option>
-                 </select>
+                 <div class="mb-3">
+                  <label class="form-label">Paid</label>
+                  <input class="form-control" type="number" name="paid" placeholder="Paid" required>
+                </div>
+                 <div class="mb-3">
+                  <label class="form-label">Remained</label>
+                  <input class="form-control" type="number" name="remained" placeholder="Remained" required>
+                </div>
+                      
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Date</label>
                   <input class="form-control" type="date" name="date" value="<?php echo Date("Y-m-d")?>">
                 </div>
-              
-                
             
-          
-            </div>
+             </div>
             <div class="tile-footer">
-              <button class="btn btn-primary" type="submit" name="btnregister"><i class="bi bi-check-circle-fill me-2"></i>Register</button>
+              <button class="btn btn-primary" type="submit" name="btnregister"><i class="bi
+               bi-check-circle-fill me-2"></i>Register</button>
             </div>
             </form>
+
             <!-- save code -->
             <?php
             if(isset($_POST['btnregister'])){
-              $un = mysqli_real_escape_string($conn, $_POST['username']);
-              $pa = mysqli_real_escape_string($conn, $_POST['password']);
-              $ut = mysqli_real_escape_string($conn, $_POST['usertype']);
+              $pn = mysqli_real_escape_string($conn, $_POST['ddlpatientname']);
+              $cb = mysqli_real_escape_string($conn, $_POST['currentbalance']);
+              $pa = mysqli_real_escape_string($conn, $_POST['paid']);
+              $re = mysqli_real_escape_string($conn, $_POST['remained']);
               $da = mysqli_real_escape_string($conn, $_POST['date']);
 
-              $insert = mysqli_query($conn,"INSERT INTO users VALUES(null, '$un', '$pa', '$ut', '$da')");
+              $insert = mysqli_query($conn,"INSERT INTO payment VALUES(null, '$pn', '$cb', '$pa', '$re', '$da')");
               echo "<h1 class='btn btn-success'>Insert Success</h1>";
             }
             ?>
